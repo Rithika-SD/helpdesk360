@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, g
 from werkzeug.security import check_password_hash
-from backend.db import get_db
+from backend.db import get_db, ph
 from backend.auth import generate_token, login_required
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
@@ -21,7 +21,11 @@ def login():
 
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT id, username, password_hash, role, full_name, created_at FROM users WHERE username = ?", (username,))
+    p = ph()
+    cursor.execute(
+        f"SELECT id, username, password_hash, role, full_name, created_at FROM users WHERE username = {p}",
+        (username,)
+    )
     user = cursor.fetchone()
     conn.close()
 
@@ -40,8 +44,6 @@ def login():
 
 @auth_bp.route("/logout", methods=["POST"])
 def logout():
-    # In stateless JWT architecture, the client destroys the token.
-    # We provide this endpoint to fulfill standard REST contract and facilitate client cleanup.
     return jsonify({"message": "Logged out successfully."}), 200
 
 @auth_bp.route("/me", methods=["GET"])
