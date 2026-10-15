@@ -1,0 +1,39 @@
+# Python & Virtual Environments
+backend/venv/
+backend/__pycache__/
+backend/routes/__pycache__/
+backend/tests/__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Databases
+backend/*.db
+*.db-journal
+
+# Node & Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment & Local Secrets
+.env
+.env.local
+.env.*.local
+
+# OS Metadata
+Thumbs.db
+[Dd]esktop.ini
+.DS_Store
+
+# Tunnel binaries & temp files
+cloudflared.exe
+bore.exe
+bore.zip
+pinggy_out.txt
+pinggy.txt
+*.zip
+make_zip.py

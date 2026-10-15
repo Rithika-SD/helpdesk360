@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: helpdesk360
+    runtime: python
+    buildCommand: chmod +x build.sh && ./build.sh
+    startCommand: gunicorn "backend.app:create_app()" --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_PATH
+        value: /opt/render/project/src/backend/helpdesk.db
+      - key: NODE_VERSION
+        value: "20"
